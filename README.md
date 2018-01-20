@@ -26,10 +26,24 @@ $ pipenv install
 ```
 
 5. Run the server:
+There's two parts to what you can run. The first is a demonstration of how things play out prior to adding the logic that makes block-chains decentralized.
+
+To start this version of the code, run:
+    * `$ pipenv run python blockchain-preconsensus.py`
+    * `$ pipenv run python blockchain-preconsensus.py -p 5001`
+    * `$ pipenv run python blockchain-preconsensus.py --port 5002`
+This shows a code state where each instance of the chain is separate and silo-ed.
+
+The next step would be to copy the snippets from "blockchain-preconsensus-additions.py" into the correct spots, then rerun the nodes. There are some steps outlined in Daniel's blog post that allow you to see the play by play of what adding the block-chain consensus logic does.
+
+The complete code can be run by executing:
+
+
     * `$ pipenv run python blockchain.py`
     * `$ pipenv run python blockchain.py -p 5001`
     * `$ pipenv run python blockchain.py --port 5002`
 
+Currently I've started work on a Bootstrapped UI to interact with this API. This is found in the complete code. It's not done yet, but much of the functionality is present today.
 
 ----------------------------
 TODO: Finish implementing the UI
