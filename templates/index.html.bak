@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block head %}
+<script>
+    $(document).ready(function(){
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+            var currentTab = $(e.target).text(); // get current tab
+            var LastTab = $(e.relatedTarget).text(); // get last tab
+            $(".current-tab span").html(currentTab);
+            $(".last-tab span").html(LastTab);
+        });
+    });
+</script>
+{% endblock %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="jumbotron">
+            <h1 class="text-center">Welcome to our BlockChain!</h1>
+            <p class="text-center">With this app, we can interact with a blockchain in a compartmentalized manner. This allows us to tinker and better understand how it works.</p>
+        </div>
+    </div>
+    <div class="row">
+        <ul id="myTab" class="nav nav-tabs">
+            <li class="active"><a href="#android" data-toggle="tab">Android</a></li>
+            <li><a href="#microsoft" data-toggle="tab">microsoft</a></li>
+
+            <li class="dropdown">
+
+                <a href="#" id="myTabDrop1" class="dropdown-toggle"
+                   data-toggle="dropdown">More..<b class="caret"></b></a>
+
+                <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
+                    <li><a href="#twitter" tabindex="-1" data-toggle="tab">Twitter</a></li>
+                    <li><a href="#wikipedia" tabindex="-1" data-toggle="tab">Wikipedia</a></li>
+                </ul>
+
+            </li>
+        </ul>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane in active" id="android">
+                <p>Android is an operating system based on the Linux kernel,
+                    and designed primarily for touchscreen mobile devices
+                    and tablet computers. Initially developed by Android, Inc.,
+                    which was later bought in 2005 by Google Inc.</p>
+            </div>
+            <div class="tab-pane " id="microsoft">
+                <p>Microsoft Windows is a series of graphical
+                    interface operating systems developed, marketed,
+                    and sold by Microsoft</p>
+            </div>
+            <div class="tab-pane " id="twitter">
+                <p> Twitter is an online social networking and
+                    microblogging service that enables users
+                    to send and read "tweets", which are text
+                    messages limited to 140 characters..</p>
+            </div>
+            <div class="tab-pane " id="wikipedia">
+                <p>Wikipedia is the worlds largest, collaboratively edited,
+                    multilingual, free Internet encyclopedia that
+                    is supported by the non-profit Wikimedia Foundation..</p>
+            </div>
+        </div>
+        <hr>
+        <p class="current-tab"><strong>Current Tab</strong>: <span></span></p>
+        <p class="last-tab"><strong>Last Tab</strong>: <span></span></p>
+    </div>
+
+</div>
+
+<script type=text/javascript>
+        $('#tabs').tab;
+
+
+    $('#mine').click(function () {
+        $.ajax({
+            url: "/mine",
+            data: {
+            },
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                $("#APIResult").append(JSON.stringify(data, null, 1));
+            },
+            error: function (xhr, status) {
+                alert("Sorry, there was a problem!");
+            },
+            complete: function (xhr, status) {
+                //$('#showresults').slideDown('slow')
+            }
+        });
+    });
+
+    $('#validate').click(function () {
+        $.ajax({
+            url: "/chain",
+            data: {
+            },
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                if(data) {
+
+                } else {
+                    $(".refresh-after-ajax").load(window.location + " .refresh-after-ajax");
+                }
+                $("#APIResult").append(JSON.stringify(data, null, 1));
+            },
+            error: function (xhr, status) {
+                alert("Sorry, there was a problem!");
+            },
+            complete: function (xhr, status) {
+                //$('#showresults').slideDown('slow')
+            }
+        });
+    });
+
+
+    $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('whatever') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-title').text('New message to ' + recipient)
+        modal.find('.modal-body input').val(recipient)
+    })
+</script>
+{% endblock %}
